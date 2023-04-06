@@ -26,6 +26,11 @@ SECRET_KEY = 'sc@du6t1v!_rezsi_f5%66k%ruw8i8pb+i8to_vf9fgh-n!yva'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','192.168.33.10','localhost']
+INTERNAL_IPS = [
+    # ...
+    '10.0.2.2',
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
 
     #third party
     'rest_framework',
+    'debug_toolbar',
 
     #project apps
     'accounts',
@@ -58,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'twitter.urls'
@@ -132,4 +139,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
