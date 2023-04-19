@@ -68,6 +68,14 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
+DEBUG_TOOLBAR_CONFIG = {
+    'JQUERY_URL': '',  # 略過使用本地的 jQuery
+    'SHOW_TOOLBAR_CALLBACK': lambda r: True,  # 不顯示 Debug Toolbar
+    'SHOW_COLLAPSED': True,  # Debug Toolbar 預設為摺疊
+    'ENABLE_STACKTRACES': True,  # 啟用 stack trace 頁面
+    'EXTRA_SIGNALS': [],  # 註冊其他 Django signal
+}
+
 ROOT_URLCONF = 'twitter.urls'
 
 TEMPLATES = [
