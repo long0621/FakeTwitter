@@ -20,17 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'sc@du6t1v!_rezsi_f5%66k%ruw8i8pb+i8to_vf9fgh-n!yva'
+SECRET_KEY = 'i_8$e&=cfr5bd1r(@^@gd@2y@+0@i0%ldpeke108o+pux&hsn4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','192.168.33.10','localhost']
-INTERNAL_IPS = [
-    # ...
-    '10.0.2.2',
-    "127.0.0.1",
-]
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.33.10', 'localhost']
 
 
 # Application definition
@@ -43,11 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #third party
+    # third party
     'rest_framework',
-    'debug_toolbar',
 
-    #project apps
+    # project apps
     'accounts',
     'tweets',
 ]
@@ -65,16 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
-
-DEBUG_TOOLBAR_CONFIG = {
-    'JQUERY_URL': '',  # 略過使用本地的 jQuery
-    'SHOW_TOOLBAR_CALLBACK': lambda r: True,  # 不顯示 Debug Toolbar
-    'SHOW_COLLAPSED': True,  # Debug Toolbar 預設為摺疊
-    'ENABLE_STACKTRACES': True,  # 啟用 stack trace 頁面
-    'EXTRA_SIGNALS': [],  # 註冊其他 Django signal
-}
 
 ROOT_URLCONF = 'twitter.urls'
 
@@ -104,13 +89,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'twitter',
-        'HOST': 'localhost',
+        'HOST': '0.0.0.0',
         'PORT': '3306',
         'USER': 'root',
-        'PASSWORD': 'yourpassword'
+        'PASSWORD': 'yourpassword',    # 这里是自己下载mysql时候输入两次的那个密码
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -148,4 +132,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
