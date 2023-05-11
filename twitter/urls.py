@@ -19,9 +19,9 @@ from rest_framework import routers
 
 from accounts.api.views import UserViewSet, AccountViewSet
 from comments.api.views import CommentViewSet
-from tweets.api.views import TweetViewSet
 from friendships.api.views import FriendshipViewSet
 from newsfeeds.api.views import NewsFeedViewSet
+from tweets.api.views import TweetViewSet
 
 router = routers.DefaultRouter()
 router.register(r'api/users', UserViewSet)
