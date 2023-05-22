@@ -11,7 +11,6 @@ from rest_framework.response import Response
 from utils.decorators import required_params
 
 
-
 class CommentViewSet(viewsets.GenericViewSet):
     """
     只实现 list, create, update, destroy 的方法
@@ -29,17 +28,20 @@ class CommentViewSet(viewsets.GenericViewSet):
         if self.action in ['destroy', 'update']:
             return [IsAuthenticated(), IsObjectOwner()]
         return [AllowAny()]
-    
+
     @required_params(params=['tweet_id'])
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         comments = self.filter_queryset(queryset).order_by('created_at')
-        serializer = CommentSerializer(comments, many=True)
+        serializer = CommentSerializer(
+            comments,
+            context={'request': request},
+            many=True,
+        )
         return Response(
             {'comments': serializer.data},
             status=status.HTTP_200_OK,
         )
-        
 
     def create(self, request, *args, **kwargs):
         data = {
@@ -59,10 +61,10 @@ class CommentViewSet(viewsets.GenericViewSet):
         # save 方法会触发 serializer 里的 create 方法，点进 save 的具体实现里可以看到
         comment = serializer.save()
         return Response(
-            CommentSerializer(comment).data,
+            CommentSerializer(comment, context={'request': request}).data,
             status=status.HTTP_201_CREATED,
         )
-    
+
     def update(self, request, *args, **kwargs):
         # get_object 是 DRF 包装的一个函数，会在找不到的时候 raise 404 error
         # 所以这里无需做额外判断
@@ -71,15 +73,14 @@ class CommentViewSet(viewsets.GenericViewSet):
             data=request.data,
         )
         if not serializer.is_valid():
-            return Response({
-                'message': 'Please check input',
-                'errors': serializer.errors,
+            raise Response({
+                'message': 'Please check input'
             }, status=status.HTTP_400_BAD_REQUEST)
         # save 方法会触发 serializer 里的 update 方法，点进 save 的具体实现里可以看到
         # save 是根据 instance 参数有没有传来决定是触发 create 还是 update
         comment = serializer.save()
         return Response(
-            CommentSerializer(comment).data,
+            CommentSerializer(comment, context={'request': request}).data,
             status=status.HTTP_200_OK,
         )
 
